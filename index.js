@@ -298,6 +298,7 @@ function update() {
             break;
         case 2:
             if (!audioPlaying && options.music) {
+                muteAllMusic();
                 editorAudio.currentTime = 0;
                 editorAudio.play();
                 audioPlaying = true;
@@ -1555,9 +1556,9 @@ function playerController() {
         if (keys[16]) {
             physics.speed = 6;
         } else if (keys[17]) {
-            physics.speed = 2;
-        } else {
             physics.speed = 1;
+        } else {
+            physics.speed = 4;
         }
         if (keys[82]) {
             if (!cannotPress) {
@@ -1718,6 +1719,9 @@ function titleScreenControls() {
         if (currentMenuOption != 4) {
             audioPlaying = false;
             menuAudio.pause();
+            menuAudio.currentTime = 0;
+            squaredImpared.pause();
+            squaredImpared.currentTime = 0;
         }
     }
     if (keys[68]) {
@@ -2104,6 +2108,9 @@ function translateLevelDataToEditor(levelData) {
 }
 
 function onStart() {
+    settingsAudio.loop = true;
+    swingAudio.loop = true;
+    squaredImpared.loop = true;
     console.log("Number of levels: ");
     console.log(allStoryModeLevels.length);
     for (var i = 0; i < allStoryModeLevels.length; i++) {
